@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'prisma.service'
-import { ProductDto } from './dto/product.dto'
-import { generateSlug } from 'src/utils/generate-slug'
-import { returnProductObject } from './return-product.object'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { CategoryService } from 'src/category/category.service'
+import { PrismaService } from 'src/prisma.service'
+import { generateSlug } from 'src/utils/generate-slug'
+import { ProductDto } from './dto/product.dto'
+import { returnProductObject } from './return-product.object'
 
 @Injectable()
 export class ProductService {
@@ -13,7 +13,9 @@ export class ProductService {
 	) {}
 
 	async getAll(searchTerm?: string) {
-		if (searchTerm) return this.search(searchTerm)
+		if (searchTerm) {
+			return this.search(searchTerm)
+		}
 
 		return this.prisma.product.findMany({
 			select: returnProductObject,
@@ -53,8 +55,7 @@ export class ProductService {
 			select: returnProductObject
 		})
 
-		if (!product) throw new Error('Категория не найдена')
-
+		if (!product) throw new NotFoundException('Product not found!')
 		return product
 	}
 
@@ -68,37 +69,38 @@ export class ProductService {
 			select: returnProductObject
 		})
 
-		if (!products) throw new Error('Продукты не найдены')
-
+		if (!products) throw new NotFoundException('Products not found!')
 		return products
 	}
 
 	async create() {
-		return this.prisma.product.create({
+		const product = await this.prisma.product.create({
 			data: {
-				name: '',
-				slug: '',
-				image: '',
 				description: '',
-				price: 0
+				name: '',
+				price: 0,
+				slug: '',
+				image: ''
 			}
 		})
+
+		return product.id
 	}
 
 	async update(id: string, dto: ProductDto) {
-		const { name, description, price, categoryId, image } = dto
+		const { description, image, price, name, categoryId } = dto
 
-		await this.categoryService.byId(categoryId)
+		await this.categoryService.getById(categoryId)
 
 		return this.prisma.product.update({
 			where: {
 				id
 			},
 			data: {
-				name,
 				description,
+				image,
 				price,
-                image,
+				name,
 				slug: generateSlug(name),
 				category: {
 					connect: {
@@ -110,10 +112,6 @@ export class ProductService {
 	}
 
 	async delete(id: string) {
-		return this.prisma.product.delete({
-			where: {
-				id
-			}
-		})
+		return this.prisma.product.delete({ where: { id } })
 	}
 }

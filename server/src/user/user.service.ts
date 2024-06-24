@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { PrismaService } from 'prisma.service'
+import { PrismaService } from 'src/prisma.service'
 import { returnUserObject } from './return-user.object'
 
 @Injectable()
@@ -33,7 +33,7 @@ export class UserService {
 		})
 
 		if (!user) {
-			throw new Error('Пользователь не найден :(')
+			throw new Error('User not found')
 		}
 
 		return user
@@ -42,9 +42,11 @@ export class UserService {
 	async toggleFavorite(userId: string, productId: string) {
 		const user = await this.getById(userId)
 
-		if (!user) throw new NotFoundException('Пользователь не найден! :(')
+		if (!user) throw new NotFoundException('User not found!')
 
-		const isExists = user.favorites.some(product => product.id === productId)
+		const isExists = user.favorites.some(
+			product => product.id === productId
+		)
 
 		await this.prisma.user.update({
 			where: {

@@ -1,9 +1,14 @@
-import { IsNumber, IsString } from 'class-validator'
+import { Prisma } from '@prisma/client'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
 
-export class ProductDto {
+export class ProductDto implements Prisma.ProductUpdateInput {
 	@IsString()
 	name: string
 
+	@IsNumber()
+	price: number
+
+	@IsOptional()
 	@IsString()
 	description: string
 
@@ -12,7 +17,4 @@ export class ProductDto {
 
 	@IsString()
 	categoryId: string
-
-	@IsNumber()
-	price: number
 }

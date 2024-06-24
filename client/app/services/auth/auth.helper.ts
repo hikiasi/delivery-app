@@ -40,5 +40,5 @@ export const saveToStorage = async (data: IAuthResponse) => {
 			EnumAsyncStorage.USER,
 			JSON.stringify(data.user)
 		)
-	} catch (error) {}
+	} catch (e) {}
 }

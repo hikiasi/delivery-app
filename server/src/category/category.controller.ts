@@ -12,7 +12,6 @@ import {
 } from '@nestjs/common'
 import { CategoryService } from './category.service'
 import { CategoryDto } from './dto/category.dto'
-import { Auth } from 'src/auth/decorators/auth.decorator'
 
 @Controller('categories')
 export class CategoryController {
@@ -22,19 +21,14 @@ export class CategoryController {
 	async getAll() {
 		return this.categoryService.getAll()
 	}
-	@Get('by-id/:id')
-	async getById(@Param('id') id: string) {
-		return this.categoryService.byId(id)
-	}
 
 	@Get('by-slug/:slug')
 	async getBySlug(@Param('slug') slug: string) {
-		return this.categoryService.bySlug(slug)
+		return this.categoryService.getBySlug(slug)
 	}
 
 	@HttpCode(200)
 	@Post()
-	@Auth()
 	async create() {
 		return this.categoryService.create()
 	}
@@ -42,14 +36,12 @@ export class CategoryController {
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Put(':id')
-	@Auth()
 	async update(@Param('id') id: string, @Body() dto: CategoryDto) {
 		return this.categoryService.update(id, dto)
 	}
 
 	@HttpCode(200)
 	@Delete(':id')
-	@Auth()
 	async delete(@Param('id') id: string) {
 		return this.categoryService.delete(id)
 	}

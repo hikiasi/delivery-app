@@ -1,8 +1,11 @@
 import axios from 'axios'
 
-import { API_URL } from '@/config/api.config'
+import {
+	deleteTokensStorage,
+	getAccessToken
+} from '@/services/auth/auth.helper'
 
-import { deleteTokensStorage, getAccessToken } from '../auth/auth.helper'
+import { API_URL } from '@/config/api.config'
 
 import { errorCatch } from './error.api'
 import { getNewTokens } from './helper.auth'
@@ -19,6 +22,7 @@ instance.interceptors.request.use(async config => {
 
 	if (config.headers && accessToken)
 		config.headers.Authorization = `Bearer ${accessToken}`
+
 	return config
 })
 

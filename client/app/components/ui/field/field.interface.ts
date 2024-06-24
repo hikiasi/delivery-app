@@ -1,8 +1,8 @@
 import {
-    Control,
-    FieldPath,
-    FieldValues,
-    RegisterOptions
+	Control,
+	FieldPath,
+	FieldValues,
+	RegisterOptions
 } from 'react-hook-form'
 import { TextInputProps } from 'react-native'
 

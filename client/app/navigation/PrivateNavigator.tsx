@@ -18,7 +18,7 @@ const PrivateNavigator: FC = () => {
 			screenOptions={{
 				headerShown: false,
 				contentStyle: {
-					backgroundColor: '#fff'
+					backgroundColor: '#ffffff'
 				}
 			}}
 		>

@@ -5,8 +5,8 @@ import { Pressable, Text } from 'react-native'
 import { IButton } from './button.interface'
 
 const Button: FC<PropsWithChildren<IButton>> = ({
-	children,
 	className,
+	children,
 	...rest
 }) => {
 	return (

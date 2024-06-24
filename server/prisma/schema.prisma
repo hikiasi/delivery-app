@@ -21,8 +21,7 @@ model User {
   phone String @default("")
 
   favorites Product[]
-
-  orders Order[]
+  orders    Order[]
 
   @@map("user")
 }
@@ -39,9 +38,11 @@ model Product {
   image       String
 
   category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
-  user       User?     @relation(fields: [userId], references: [id])
-  userId     String?
+  categoryId String?   @map("category_id")
+
+  user       User?       @relation(fields: [userId], references: [id])
+  userId     String?     @map("user_id")
+  orderItems OrderItem[]
 
   @@map("product")
 }
@@ -51,9 +52,10 @@ model Category {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  name  String @unique
-  slug  String @unique
-  image String
+  name String @unique
+  slug String @unique
+
+  image String?
 
   products Product[]
 
@@ -65,10 +67,28 @@ model Order {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  reference String @unique
+  items OrderItem[]
+  total Int
 
   user   User?   @relation(fields: [userId], references: [id])
-  userId String?
+  userId String? @map("user_id")
 
   @@map("order")
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  quantity Int
+  price    Int
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @map("order_id")
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+
+  @@map("order_item")
 }

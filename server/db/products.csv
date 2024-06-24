@@ -1,0 +1,6 @@
+id,created_at,updated_at,name,slug,description,price,image,category_id,user_id
+clw7unpzf00007r7cyctg9z6k,2024-05-15 13:20:39.239,2024-05-24 15:37:10.933,Кока-кола,coca-cola,Супер мега кока-кола,3,/uploads/images/products/coca-cola.png,clw8uwsej0002zn22r7lfi0vf,clxqrhq4l0000rby8rjjrh0cb
+clw8uzbs40004zn22vaatmvxe,2024-05-16 06:17:26.884,2024-05-16 06:18:00.591,Американо,americano,Лучшее американо на рынке,3,/uploads/images/products/americano.png,clw7euyw90000ixhoxcpfwa11,
+clw8v0a2x0005zn22rjsqknbm,2024-05-16 06:18:11.338,2024-06-24 18:34:52.024,Картошка фри,world-famous-fries,Зажарена напрямую от солнца,2,/uploads/images/products/fries.png,clw8uw3gw0000zn22fdemlpm6,clxqrvirv0001rby8y7as0c1p
+clw8v7w0y0007zn22gdigxbd3,2024-05-16 06:24:06.37,2024-06-24 20:53:37.238,Фанта,fanta,Мега оранжевый напиток,2,/uploads/images/products/fanta.png,clw8uwsej0002zn22r7lfi0vf,clxtgg81y00002zj7uz9n2lsl
+clw8uxmm90003zn22ws6q1bc4,2024-05-16 06:16:07.617,2024-06-24 20:53:40.124,Биг Мак,big-mac,Наивкуснейший биг мак,4,/uploads/images/products/big-mac.png,clw8uwg9z0001zn22s0imlo6z,clxtgg81y00002zj7uz9n2lsl

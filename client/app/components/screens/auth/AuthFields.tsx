@@ -9,9 +9,10 @@ import { validEmail } from './email.regex'
 
 interface IAuthFields {
 	control: Control<IAuthFormData>
+	isPassRequired?: boolean
 }
 
-const AuthFields: FC<IAuthFields> = ({ control }) => {
+const AuthFields: FC<IAuthFields> = ({ control, isPassRequired }) => {
 	return (
 		<>
 			<Field<IAuthFormData>

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'prisma.service'
-import { returnCategoryObject } from './return-category.object'
-import { CategoryDto } from './dto/category.dto'
+import { PrismaService } from 'src/prisma.service'
 import { generateSlug } from 'src/utils/generate-slug'
+import { CategoryDto } from './dto/category.dto'
+import { returnCategoryObject } from './return-category.object'
 
 @Injectable()
 export class CategoryService {
@@ -14,7 +14,7 @@ export class CategoryService {
 		})
 	}
 
-	async byId(id: string) {
+	async getById(id: string) {
 		const category = await this.prisma.category.findUnique({
 			where: {
 				id
@@ -22,12 +22,12 @@ export class CategoryService {
 			select: returnCategoryObject
 		})
 
-		if (!category) throw new Error('Категория не найдена')
+		if (!category) throw new Error('Category not found')
 
 		return category
 	}
 
-	async bySlug(slug: string) {
+	async getBySlug(slug: string) {
 		const category = await this.prisma.category.findUnique({
 			where: {
 				slug
@@ -35,7 +35,7 @@ export class CategoryService {
 			select: returnCategoryObject
 		})
 
-		if (!category) throw new Error('Категория не найдена')
+		if (!category) throw new Error('Category not found')
 
 		return category
 	}

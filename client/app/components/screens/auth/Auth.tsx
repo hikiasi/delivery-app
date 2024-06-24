@@ -6,7 +6,9 @@ import Loader from '@/components/ui/Loader'
 import Button from '@/components/ui/button/Button'
 
 import { IAuthFormData } from '@/types/auth.interface'
+
 import AuthFields from './AuthFields'
+import { useAuthMutations } from './useAuthMutations'
 
 const Auth: FC = () => {
 	const [isReg, setIsReg] = useState(false)
@@ -15,11 +17,12 @@ const Auth: FC = () => {
 		mode: 'onChange'
 	})
 
-	const onSubmit: SubmitHandler<IAuthFormData> = data => {
-		console.log(data)
-	}
+	const { isLoading, registerSync, loginSync } = useAuthMutations(reset)
 
-	const isLoading = false
+	const onSubmit: SubmitHandler<IAuthFormData> = data => {
+		if (isReg) registerSync(data)
+		else loginSync(data)
+	}
 
 	return (
 		<View className='mx-2 items-center justify-center h-full'>
@@ -31,16 +34,17 @@ const Auth: FC = () => {
 					<Loader />
 				) : (
 					<>
-						<AuthFields control={control}/>
-
+						<AuthFields control={control} isPassRequired />
 
 						<Button onPress={handleSubmit(onSubmit)}>
-							{isReg ? 'Зарегистрироваться ' : 'Войти'}
+							{isReg ? 'Зарегистрироваться' : 'Войти'}
 						</Button>
 
 						<Pressable onPress={() => setIsReg(!isReg)}>
 							<Text className='text-black text-center text-base mt-6'>
-								{isReg ? 'Уже есть аккаунт?' : 'Нет аккаунта?'}{' '}
+								{isReg
+									? 'Уже есть аккаунт? '
+									: 'Нет аккаунта? '}
 								<Text className='text-[#8968ff]'>
 									{isReg ? 'Войти' : 'Зарегистрироваться'}
 								</Text>
